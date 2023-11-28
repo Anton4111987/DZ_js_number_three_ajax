@@ -21,10 +21,7 @@ $.ajax({
             success: function(photos){
                 photos.forEach(photo => {
                     drawPhoto(photo);
-                });
-
-
-                
+                }); 
             }
         });
 
@@ -49,7 +46,7 @@ function drawAlbum(album){
     h5.innerText = 'id: '+album.id;
    
     let count  = document.createElement('h5');
-    count.innerText = 'Количество фотографий в альбоме: '+countPhoto;
+    count.innerText = 'Количество фотографий в альбоме: '+ countPhoto;
 
 
     div.append(p);
@@ -89,12 +86,14 @@ function drawPhoto(photo){
     let h4 = document.createElement('h4');
     h4.innerText = photo.title;
     let img=document.createElement('img');
-   
+    img.src=photo.url;
     div_photo.append(h4);
     div_photo.append(img);
     div_photo.id = 'photo_' + photo.id;
-    countPhoto=Math.max(photo.id);
-    let photo_section = document.getElementById('album_'+photo.albumId).querySelector('.photo-section');
+   
+    console.log(Math.max(photo.id));
+    let photo_section = document.getElementById('album_'+ photo.albumId).querySelector('.photo-section');
+    //countPhoto=
     photo_section.append(div_photo);
 }
 /**
