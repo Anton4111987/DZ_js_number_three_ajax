@@ -4,7 +4,7 @@
 const postSection = document.getElementById('post-section');
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
-
+let countPhoto;
 $.ajax({
     url: baseUrl + "/albums",
     method: "GET",
@@ -38,78 +38,50 @@ $.ajax({
 
 
 
-function drawPost(post){
+function drawAlbum(album){
     let div = document.createElement('div');
-    div.classList.add('post');
-    let h3  = document.createElement('h3');
-    h3.innerText = post.title;
+    div.classList.add('album');
     let p = document.createElement('p');
-    p.innerText = post.body;
+    p.innerText = 'album title: '+album.title;
+    let h3  = document.createElement('h3');
+    h3.innerText = 'userId: '+album.userId;
+    let h5  = document.createElement('h5');
+    h5.innerText = 'id: '+album.id;
+   
+    let count  = document.createElement('h5');
+    count.innerText = 'Количество фотографий в альбоме: '+countPhoto;
 
-    div.append(h3);
+
     div.append(p);
+    div.append(h3);
+    div.append(h5);
+    div.append(count);
+   
 
-    div.id = 'post_' + post.id;
+    div.id = 'album_' + album.id;
 
     let button = document.createElement('a');
     button.href = '#';
-    button.innerText = 'Комментарии:'
+    button.innerText = 'Просмотреть фото'
     div.append(button);
 
-    let comment_section = document.createElement('div');
-    comment_section.classList.add('comment-section');
-    comment_section.style.display = 'none';
-    div.append(comment_section);
-
-    //postSection.append(div);
-
-    
-    let button_album=document.createElement('a');
-    button_album.href = '#';
-    button_album.classList.add('button_Album');
-    button_album.innerText = 'Альбомы ';  //  + '('+ Math.max(album.userId) +')';
-    div.append(button_album);
-
-    let album_section = document.createElement('div');
-    album_section.classList.add('album-section');
-    album_section.style.display = 'none';
-    div.append(album_section);
+    let photo_section = document.createElement('div');
+    photo_section.classList.add('photo-section');
+    photo_section.style.display = 'none';
+    div.append(photo_section);
 
     postSection.append(div);
 
-
     button.addEventListener('click', function(){
-        if(comment_section.style.display == 'block'){
-            comment_section.style.display = 'none';
+        if(photo_section.style.display == 'block'){
+            photo_section.style.display = 'none';
         }else{
-            comment_section.style.display = 'block';
-        }
-    });
-
-    button_album.addEventListener('click', function(){
-        if(album_section.style.display == 'block'){
-            album_section.style.display = 'none';
-        }else{
-            album_section.style.display = 'block';
+            photo_section.style.display = 'block';
         }
     });
 }
 
 
-
-function drawAlbum(album){
-    let div_album = document.createElement('div');
-    div_album.classList.add('album');
-    let h4 = document.createElement('h4');
-    h4.innerText = album.title;
-   
-    div_album.append(h4);
-
-    div_album.id = 'album_' + album.id;
-
-    let album_section = document.getElementById('post_'+album.userId).querySelector('.album-section');
-    album_section.append(div_album);
-}
 
 function drawPhoto(photo){
     let div_photo = document.createElement('div');
@@ -121,9 +93,9 @@ function drawPhoto(photo){
     div_photo.append(h4);
     div_photo.append(img);
     div_photo.id = 'photo_' + photo.id;
-
+    countPhoto=Math.max(photo.id);
     let photo_section = document.getElementById('album_'+photo.albumId).querySelector('.photo-section');
-    photo_section.append(div_album);
+    photo_section.append(div_photo);
 }
 /**
  * Практическое задание: 
