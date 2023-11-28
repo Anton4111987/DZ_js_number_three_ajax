@@ -4,57 +4,6 @@
 const postSection = document.getElementById('post-section');
 const baseUrl = 'https://jsonplaceholder.typicode.com';
 
-$.ajax({
-    url: baseUrl + "/posts",
-    method: "GET",
-    dataType: "json",
-    success: function(posts){
-        posts.forEach(post => {
-            drawPost(post);
-        });
-
-        $.ajax({
-            url: baseUrl + "/comments",
-            method: "GET",
-            dataType: "json",
-            success: function(comments){
-                comments.forEach(comment => {
-                    drawComment(comment);
-                });
-            }
-        });
-
-        /*$.ajax({
-            url: baseUrl + "/albums",
-            method: "GET",
-            dataType: "json",
-            success: function(albums){
-                albums.forEach(album => {
-                    drawAlbum(album);
-                });
-
-                $.ajax({
-                    url: baseUrl + "/photos",
-                    method: "GET",
-                    dataType: "json",
-                    success: function(photos){
-                        photos.forEach(photo => {
-                            drawPhoto(photo);
-                        });
-        
-        
-                        
-                    }
-                });
-
-
-            }
-        });*/
-    },
-    error: function(e){
-        console.log(e);
-    }
-});
 
 $.ajax({
     url: baseUrl + "/albums",
@@ -146,22 +95,7 @@ function drawPost(post){
     });
 }
 
-function drawComment(comment){
-    let div = document.createElement('div');
-    div.classList.add('comment');
-    let h4 = document.createElement('h4');
-    h4.innerText = comment.email;
-    let p = document.createElement('p');
-    p.innerText = comment.body;
 
-    div.append(h4);
-    div.append(p);
-
-    div.id = 'comment_' + comment.id;
-
-    let comment_section = document.getElementById('post_'+comment.postId).querySelector('.comment-section');
-    comment_section.append(div);
-}
 
 function drawAlbum(album){
     let div_album = document.createElement('div');
